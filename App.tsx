@@ -12,10 +12,12 @@ export default function App() {
     try {
       const { data, error } = await supabase
         .from('e_or_n_test')
-        .insert(curMood); // or .insert([{ mood: curMood.mood }])
+        .insert(curMood) // or .insert([{ mood: curMood.mood }])
+        .select()
+        .single();
 
       if (error) throw error;
-      console.log('Mood registered:', data);
+      console.log('Mood registered:', data.mood);
     } catch (err: any) {
       console.log(err?.message ?? err);
     }
