@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import 'react-native-url-polyfill/auto';
 import { supabase } from './util/supabase';
+import Auth from './components/Auth';
 
 export default function App() {
   const [curMood, setMood] = useState({ mood: '' });
@@ -52,6 +53,7 @@ export default function App() {
       </Pressable>
       <Text>{curMood.mood}</Text>
       <StatusBar style="auto" />
+      <Auth />;
     </View>
   );
 }
