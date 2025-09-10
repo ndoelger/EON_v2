@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { supabase } from '../util/supabase';
 import {
   Alert,
@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 
 export default function Auth() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({ email: '', password: '' });
+  const [signIn, setSignIn] = useState(true);
 
   //   async function signInWithEmail() {
   //     try {
@@ -40,18 +40,29 @@ export default function Auth() {
 
   return (
     <View>
-      <Text>Email:</Text>
-      <TextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder="email@address.com"
-      ></TextInput>
-      <Text>Email:</Text>
-      <TextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder="email@address.com"
-      ></TextInput>
+      {' '}
+      {signIn ? (
+        <View>
+          <Text>Email:</Text>
+          <TextInput
+            onChangeText={(text) => setUser({ ...user, email: text })}
+            value={user.email}
+            placeholder="email@address.com"
+          ></TextInput>
+          <Text>Password:</Text>
+          <TextInput
+            onChangeText={(text) => setUser({ ...user, password: text })}
+            value={user.password}
+            placeholder="email@address.com"
+          ></TextInput>
+        </View>
+      ) : (
+        <View></View>
+      )}
+      <Pressable onPress={() => setSignIn(!signIn)}>
+        <Text>{signIn ? 'Sign In' : 'Sign Up'}</Text>
+      </Pressable>
+      ;
     </View>
   );
 }
