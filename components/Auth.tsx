@@ -24,23 +24,21 @@ export default function Auth() {
   //     }
   //   }
 
-  //   async function signUpWithEmail() {
-  //     try {
-  //       const {
-  //         data: { session },
-  //         error,
-  //       } = await supabase.auth.signUp({
-  //         email: email,
-  //         password: password,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+  async function signUpWithEmail() {
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      email: user.email,
+      password: user.password,
+    });
+    if (error) Alert.alert(error.message);
+    if (!session)
+      Alert.alert('Please check your inbox for email verification!');
+  }
 
   return (
     <View>
-      {' '}
       {signIn ? (
         <View>
           <Text>Email:</Text>
@@ -57,12 +55,35 @@ export default function Auth() {
           ></TextInput>
         </View>
       ) : (
-        <View></View>
+        <View>
+          <Text>New Email:</Text>
+          <TextInput
+            onChangeText={(text) => setUser({ ...user, email: text })}
+            value={user.email}
+            placeholder="email@address.com"
+          ></TextInput>
+          <Text>New Password:</Text>
+          <TextInput
+            onChangeText={(text) => setUser({ ...user, password: text })}
+            value={user.password}
+            placeholder="email@address.com"
+          ></TextInput>
+          <Pressable onPress={signUpWithEmail}>
+            <Text>Signup</Text>
+          </Pressable>
+        </View>
       )}
       <Pressable onPress={() => setSignIn(!signIn)}>
         <Text>{signIn ? 'Sign In' : 'Sign Up'}</Text>
       </Pressable>
-      ;
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    color: 'blue',
+    padding: 10,
+    textAlign: 'center',
+  },
+});

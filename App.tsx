@@ -53,7 +53,7 @@ export default function App() {
       </Pressable>
       <Text>{curMood.mood}</Text>
       <StatusBar style="auto" />
-      <Auth />;
+      <Auth />
     </View>
   );
 }
