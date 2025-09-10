@@ -25,16 +25,19 @@ export default function Auth() {
   //   }
 
   async function signUpWithEmail() {
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: user.email,
       password: user.password,
     });
     if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert('Please check your inbox for email verification!');
+
+    console.log(data)
+
+    if (!data.session) {
+      if (data.user?.identities?.length === 0) {
+        Alert.alert('That email already exists');
+      } else Alert.alert('Please check your inbox for email verification!');
+    }
   }
 
   return (
